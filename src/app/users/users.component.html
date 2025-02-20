@@ -1,3 +1,6 @@
+@if(errorMessage) {
+  <p class="errorMessage">{{errorMessage}}</p>
+}
 <p>Users: {{users}}</p>
 <ul>
   <li>{{users[0]}}</li>
@@ -9,9 +12,9 @@
   <li *ngFor="let user of users">{{user.name}}</li>
 </ul>
 <ol>
-  @for(u of users; track u){
+  @for(u of users; track $index; let i = $index){
     <!-- <li>{{u.id}}: {{u.name}}, {{u.email}}, {{u.lastLogin}}</li> -->
-    <li (click)="selectUser(u)">{{u.name}}, {{u.email}}</li>
+    <li (click)="selectUser(u)">{{i}}: {{u.name}}, {{u.email}}</li>
   }
 </ol>
 <p *ngIf="selectedUser">Selected user: {{selectedUser.name}}</p>
