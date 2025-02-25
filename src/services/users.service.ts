@@ -12,10 +12,10 @@ export class UsersService {
   http = inject(HttpClient);
   msgService = inject(MessageService); 
   users:User[] = [new User("JankoService", "janko@janko.sk"),
-           new User("MarienkaService", "marienka@janko.sk", 2, new Date('2025-01-01')),
-           {name:"JožkoService", email: "jozko@janko.sk", password: "heslo"}
+           new User("MarienkaService", "marienka@janko.sk", 2, new Date('2025-01-01'))
   ];
   token = '';
+  url = 'http://localhost:8080/';
   
   getUsersSynchronous():User[] {
     return this.users;
@@ -26,14 +26,20 @@ export class UsersService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>('http://localhost:8080/users').pipe(
+    return this.http.get<User[]>(this.url + 'users').pipe(
+      map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser))),
+      catchError(err => this.processError(err))
+    );
+  }
+  getExtendedUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + 'users/' + this.token).pipe(
       map(jsonUsers => jsonUsers.map(jsonUser => User.clone(jsonUser))),
       catchError(err => this.processError(err))
     );
   }
 
   login(auth:Auth): Observable<boolean> {
-    return this.http.post('http://localhost:8080/login',auth, {responseType: 'text'}).pipe(
+    return this.http.post(this.url + 'login',auth, {responseType: 'text'}).pipe(
       tap(token => {
         this.token = token;
         this.msgService.success("user "+ auth.name +" is logged in");

@@ -4,9 +4,6 @@
     <mat-card-title>Login to our site</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    @if(errorMessage) {
-      <p class="errorMessage">{{errorMessage}}</p>
-    }
     <mat-form-field>
       <mat-label>User name</mat-label>
       <input matInput [(ngModel)]="auth.name" name="name">

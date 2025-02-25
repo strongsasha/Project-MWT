@@ -12,7 +12,7 @@ import { UsersService } from '../../services/users.service';
 export class UsersComponent implements OnInit {
   users:User[] = [new User("Janko", "janko@janko.sk"),
            new User("Marienka", "marienka@janko.sk", 2, new Date('2025-01-01')),
-           {name:"Jožko", email: "jozko@janko.sk", password: "heslo"}
+           {name:"Jožko", email: "jozko@janko.sk", password: "heslo", active: true, groups: []}
   ];
   selectedUser?: User;
   errorMessage = '';

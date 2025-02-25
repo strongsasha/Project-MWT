@@ -12,9 +12,12 @@ import { User } from '../../entities/user';
 export class ExtendedUsersComponent implements OnInit {
   usersService = inject(UsersService);
   users: User[] = [];
-  columnsToDisplay = ['id', 'name', 'email'];
+  columnsToDisplay = ['id', 'name', 'email', 'active', 'lastLogin'];
 
   ngOnInit() {
-    this.usersService.getUsers().subscribe(users => this.users = users);
+    this.usersService.getExtendedUsers().subscribe(users => {
+      this.users = users;
+      console.log(users);
+    });
   }
 }

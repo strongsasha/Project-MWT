@@ -20,22 +20,9 @@ export class LoginComponent {
   router = inject(Router);
   auth = new Auth("Peter", "sovy");
   hide = true;
-  errorMessage = '';
 
   login() {
-    this.usersService.login(this.auth).subscribe({
-      next: success => {
-        if (success) {
-          // choď na extended users
-          this.router.navigateByUrl('/extended-users');
-        } else {
-          // vypíš používateľovi že zadal zlé heslo alebo meno
-          this.errorMessage = "Wrong name or password";
-        }
-      },
-      error: err => {
-        this.errorMessage = "Server not available";
-      }
-    });
+    this.usersService.login(this.auth).subscribe( success => 
+          this.router.navigateByUrl('/extended-users'));
   }
 }
