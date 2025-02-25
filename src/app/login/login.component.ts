@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   usersService = inject(UsersService);
+  router = inject(Router);
   auth = new Auth("Peter", "sovy");
   hide = true;
   errorMessage = '';
@@ -25,6 +27,7 @@ export class LoginComponent {
       next: success => {
         if (success) {
           // choď na extended users
+          this.router.navigateByUrl('/extended-users');
         } else {
           // vypíš používateľovi že zadal zlé heslo alebo meno
           this.errorMessage = "Wrong name or password";
