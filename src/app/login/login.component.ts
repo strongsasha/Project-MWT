@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -24,5 +24,9 @@ export class LoginComponent {
   login() {
     this.usersService.login(this.auth).subscribe( success => 
           this.router.navigateByUrl('/extended-users'));
+  }
+
+  printErrors(e: ValidationErrors) {
+    return JSON.stringify(e);
   }
 }

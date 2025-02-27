@@ -6,8 +6,20 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>User name</mat-label>
-      <input matInput [(ngModel)]="auth.name" name="name">
-    </mat-form-field>
+      <input matInput [(ngModel)]="auth.name" name="name" required minlength="2" #nameModel="ngModel">
+      <mat-hint>Please type your user name</mat-hint>
+      <mat-error>
+      @if(nameModel.errors) {
+        @if(nameModel.errors['required']) {
+          User name is required  
+        } @else if (nameModel.errors['minlength']) {
+          User name must have at least {{nameModel.errors['minlength']['requiredLength']}} characters 
+        } @else {
+          {{printErrors(nameModel.errors)}}
+        }
+      }
+      </mat-error>
+  </mat-form-field>
     <mat-form-field>
       <mat-label>Enter your password</mat-label>
       <input matInput [(ngModel)]="auth.password" name="pass" [type]="hide ? 'password' : 'text'" />

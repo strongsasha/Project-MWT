@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { User } from '../entities/user';
 import { catchError, EMPTY, map, Observable, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -14,8 +14,34 @@ export class UsersService {
   users:User[] = [new User("JankoService", "janko@janko.sk"),
            new User("MarienkaService", "marienka@janko.sk", 2, new Date('2025-01-01'))
   ];
-  token = '';
   url = 'http://localhost:8080/';
+
+  loggedUserS = signal(this.userName);
+
+  set token(value: string) {
+    if (value) {
+      localStorage.setItem('filmsToken', value);
+    } else {
+      localStorage.removeItem('filmsToken');
+    }
+  }
+
+  get token(): string {
+    return localStorage.getItem('filmsToken') || '';
+  }
+
+  set userName(value: string) {
+    if (value) {
+      localStorage.setItem('filmsUserName', value);
+    } else {
+      localStorage.removeItem('filmsUserName');
+    }
+    this.loggedUserS.set(value);
+  }
+
+  get userName(): string {
+    return localStorage.getItem('filmsUserName') || '';
+  }
   
   getUsersSynchronous():User[] {
     return this.users;
@@ -42,11 +68,24 @@ export class UsersService {
     return this.http.post(this.url + 'login',auth, {responseType: 'text'}).pipe(
       tap(token => {
         this.token = token;
+        this.userName = auth.name;
+        
         this.msgService.success("user "+ auth.name +" is logged in");
       }),
       map(token => true),
       catchError(error => this.processError(error))
     );
+  }
+
+  logout(): Observable<void> {
+    return this.http.get<void>(this.url + 'logout/' + this.token).pipe(
+      tap(() => {
+        this.msgService.success("User " + this.userName + " is logged out");
+        this.userName = '';
+        this.token = '';
+      }),
+      catchError(error => this.processError(error))
+    )
   }
 
   processError(error:any) {
