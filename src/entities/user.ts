@@ -7,6 +7,10 @@ export class User {
                    u.groups?.map(g => Group.clone(g)));
   }
 
+  static newRegUser(name: string, email: string, password: string) {
+    return new User(name, email, undefined, undefined, password);
+  }
+
   constructor(
     public name: string,
     public email: string,

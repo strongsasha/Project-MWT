@@ -88,6 +88,13 @@ export class UsersService {
     )
   }
 
+  register(user: User): Observable<User> {
+    return this.http.post<User>(this.url + 'register', user).pipe(
+      map(jsonUser => User.clone(jsonUser)),
+      catchError(error => this.processError(error))
+    )
+  }
+
   processError(error:any) {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) {
