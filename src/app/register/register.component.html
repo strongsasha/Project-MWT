@@ -13,6 +13,8 @@
               User name is required  
             } @else if (name.errors['minlength']) {
               User name must have at least {{name.errors['minlength']['requiredLength']}} characters 
+            } @else if (name.errors['serverConflict']) {
+              User name exists on server 
             } @else {
               {{printErrors(name.errors)}}
             }
@@ -28,6 +30,8 @@
               Email is required  
             } @else if (email.errors['email'] || email.errors['pattern']) {
               Email is in wrong format 
+            } @else if (email.errors['serverConflict']) {
+              E-mail exists on server 
             } @else {
               {{printErrors(email.errors)}}
             }

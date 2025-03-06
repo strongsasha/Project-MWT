@@ -95,6 +95,19 @@ export class UsersService {
     )
   }
 
+  userConflicts(user: User): Observable<string[]> {
+    return this.http.post<string[]>(this.url + 'user-conflicts', user).pipe(
+      catchError(error => this.processError(error))
+    )
+  }
+
+  deleteUser(id: number): Observable<boolean> {
+    return this.http.delete<void>(this.url + 'user/' + id + '/' + this.token).pipe(
+      map(() => true),
+      catchError(error => this.processError(error))
+    );
+  }
+
   processError(error:any) {
     if (error instanceof HttpErrorResponse) {
       if (error.status === 0) {
