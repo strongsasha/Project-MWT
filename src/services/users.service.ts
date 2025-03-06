@@ -4,6 +4,7 @@ import { catchError, EMPTY, map, Observable, of, tap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
+import { Group } from '../entities/group';
 
 @Injectable({
   providedIn: 'root'
@@ -104,6 +105,13 @@ export class UsersService {
   deleteUser(id: number): Observable<boolean> {
     return this.http.delete<void>(this.url + 'user/' + id + '/' + this.token).pipe(
       map(() => true),
+      catchError(error => this.processError(error))
+    );
+  }
+
+  getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(this.url + 'groups').pipe(
+      map(jsonGroups => jsonGroups.map(jsonGroup => Group.clone(jsonGroup))),
       catchError(error => this.processError(error))
     );
   }
