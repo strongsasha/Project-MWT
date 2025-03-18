@@ -1,23 +1,20 @@
 import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatTableDataSource} from '@angular/material/table';
 import { UsersService } from '../../services/users.service';
 import { User } from '../../entities/user';
 import { DatePipe } from '@angular/common';
 import { GroupsToStringPipe } from '../../pipes/groups-to-string.pipe';
-import {MatIconModule} from '@angular/material/icon';
 import { MessageService } from '../../services/message.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
-import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import { MaterialModule } from '../../modules/material.module';
 
 @Component({
   selector: 'app-extended-users',
-  imports: [MatTableModule, MatIconModule, MatButtonModule, RouterLink, DatePipe, GroupsToStringPipe, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule],
+  imports: [RouterLink, DatePipe, GroupsToStringPipe, MaterialModule],
   templateUrl: './extended-users.component.html',
   styleUrl: './extended-users.component.css'
 })
