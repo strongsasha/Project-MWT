@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Auth } from '../../entities/auth';
-import { UsersService } from '../../services/users.service';
+import { DEFAULT_NAVIGATE_AFTER_LOGIN, UsersService } from '../../services/users.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,8 +22,10 @@ export class LoginComponent {
   hide = true;
 
   login() {
-    this.usersService.login(this.auth).subscribe( success => 
-          this.router.navigateByUrl('/extended-users'));
+    this.usersService.login(this.auth).subscribe( success => {
+      this.router.navigateByUrl(this.usersService.navigateAfterLogin);
+      this.usersService.navigateAfterLogin = DEFAULT_NAVIGATE_AFTER_LOGIN;
+    });
   }
 
   printErrors(e: ValidationErrors) {
