@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Auth } from '../entities/auth';
 import { MessageService } from './message.service';
 import { Group } from '../entities/group';
+import { environment } from '../environments/environment';
 
 export const DEFAULT_NAVIGATE_AFTER_LOGIN = '/extended-users';
 
@@ -17,7 +18,7 @@ export class UsersService {
   users:User[] = [new User("JankoService", "janko@janko.sk"),
            new User("MarienkaService", "marienka@janko.sk", 2, new Date('2025-01-01'))
   ];
-  url = 'http://localhost:8080/';
+  url = environment.restServerUrl;
   navigateAfterLogin = DEFAULT_NAVIGATE_AFTER_LOGIN;
 
   loggedUserS = signal(this.userName);

@@ -7,7 +7,8 @@ import { RegisterComponent } from './register/register.component';
 import { User } from '../entities/user';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { GroupsListComponent } from '../modules/groups/groups-list/groups-list.component';
-import { authGuard } from '../guards/auth.guard';
+import { authGuard, authMatchGuard } from '../guards/auth.guard';
+import { canDeactivateGuard } from '../guards/can-deactivate.guard';
 
 export const routes: Routes = [
   {path: 'users', component: UsersComponent},
@@ -18,10 +19,13 @@ export const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'user/new', component: UserEditComponent, data: {newUser: true}},
   {path: 'user/edit/:id', component: UserEditComponent,
-    canActivate:[authGuard]
+    canActivate:[authGuard],
+    canDeactivate: [canDeactivateGuard]
   },
   {path: 'groups', 
-   loadChildren: () => import('../modules/groups/groups.module')},
+   loadChildren: () => import('../modules/groups/groups.module'),
+   canMatch:[authMatchGuard]
+  },
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
