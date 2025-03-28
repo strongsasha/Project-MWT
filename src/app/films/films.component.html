@@ -2,14 +2,7 @@
   <mat-label>Search</mat-label>
   <input matInput (keyup)="filter($event)">
 </mat-form-field>
-
-@if(filmsResource.isLoading()) {
-  <h2>Loading...</h2>
-  <mat-progress-spinner
-        mode="indeterminate">
-    </mat-progress-spinner>
-} @else {
-  <table mat-table matSort [dataSource]="filmsS()">
+<table mat-table matSort [dataSource]="filmsS()">
     <mat-text-column name="id" headerText="ID"></mat-text-column>  
     <ng-container matColumnDef="nazov">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Nazov</th>
@@ -45,9 +38,12 @@
     <tr mat-header-row *matHeaderRowDef="columnsToDisplayS()"></tr>
     <tr mat-row *matRowDef="let film; columns: columnsToDisplayS()"></tr>
   </table>
+  @if(filmsResource.isLoading()) {
+    <h2>Loading...</h2>
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  } 
   <mat-paginator [length]="responseS()?.totalCount || 0"
                 [pageSize]="5"
                 [pageSizeOptions]="[5, 10, 50]"
                 aria-label="Select page">
   </mat-paginator>
-}
