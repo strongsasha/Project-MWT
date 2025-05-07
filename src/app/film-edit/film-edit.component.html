@@ -1,0 +1,36 @@
+<form [formGroup]="filmForm" (ngSubmit)="onSubmit()" class="edit-form">
+  <mat-card>
+    <mat-card-content>
+      <div class="form-layout">
+        <mat-form-field appearance="fill" class="form">
+          <mat-label>Názov</mat-label>
+          <input matInput formControlName="nazov" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form">
+          <mat-label>Rok</mat-label>
+          <input matInput formControlName="rok" type="number" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form">
+          <mat-label>Slovenský názov</mat-label>
+          <input matInput formControlName="slovenskyNazov">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form">
+          <mat-label>AFI 1998</mat-label>
+          <input matInput formControlName="afi1998" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form">
+          <mat-label>AFI 2007</mat-label>
+          <input matInput formControlName="afi2007" type="number">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="actions-right">
+      <button mat-flat-button color="accent" type="submit">Uložiť</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

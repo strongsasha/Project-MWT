@@ -9,6 +9,7 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { GroupsListComponent } from '../modules/groups/groups-list/groups-list.component';
 import { authGuard, authMatchGuard } from '../guards/auth.guard';
 import { canDeactivateGuard } from '../guards/can-deactivate.guard';
+import { FilmEditComponent } from './film-edit/film-edit.component';
 
 export const routes: Routes = [
   {path: 'users', component: UsersComponent},
@@ -28,6 +29,17 @@ export const routes: Routes = [
   },
   {path: 'chat', loadComponent:() => import('./chat/chat.component').then(mod => mod.ChatComponent)},
   { path: 'films', loadComponent: () => import('./films/films.component')},
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: '**', component: PageNotFoundComponent}
+  {
+    path: 'films/edit/:id',
+    loadComponent: () => import('./film-edit/film-edit.component').then(m => m.FilmEditComponent)
+  },
+  {
+    path: 'films/details/:id',
+    loadComponent: () => import('./film-detail/film-detail.component').then(m => m.FilmDetailComponent)
+  },
+  {
+    path: 'films/add',
+    loadComponent: () => import('./film-edit/film-edit.component').then(m => m.FilmEditComponent)
+  }
+  
 ];

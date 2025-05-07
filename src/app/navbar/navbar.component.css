@@ -4,3 +4,6 @@
 .active {
   background-color: rgba(0,0,0,0.2);
 }
+mat-toolbar{
+  background-color: #F4F4F4;
+}

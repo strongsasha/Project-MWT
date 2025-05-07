@@ -9,6 +9,7 @@ import { L, P, Q } from '@angular/cdk/keycodes';
 import { MatSort } from '@angular/material/sort';
 import { UsersService } from '../../services/users.service';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-films',
@@ -19,12 +20,20 @@ import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export default class FilmsComponent implements AfterViewInit {
   filmsService = inject(FilmsService);
   usersService = inject(UsersService);
+  router = inject(Router); 
 
   columnsToDisplayS = computed(() => this.usersService.loggedUserS() 
-                   ? ['id', 'nazov', 'rok','slovenskyNazov', 'afi1998', 'afi2007']
+                   ? ['id', 'nazov', 'rok','slovenskyNazov', 'afi1998', 'afi2007', 'actions', 'imdbID']
                    : ['id', 'nazov', 'rok']);
   paginatorS = viewChild.required<MatPaginator>(MatPaginator);
   sortHeaderS = viewChild.required<MatSort>(MatSort);
+  onEdit(film: any): void {
+    this.router.navigate(['/films/edit', film.id]);
+    
+  };
+  onAdd(): void {
+    this.router.navigate(['/films/edit', 'new']); 
+  }
 
   orderByS = signal<string | undefined>(undefined);
   descendingS = signal<boolean | undefined>(undefined);

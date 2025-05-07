@@ -9,6 +9,24 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class FilmsService {
+  getFilmById(id: string): Observable<Film> {
+    return this.http.get<Film>(`${this.url}films/${id}`, this.getTokenHeader()).pipe(
+      catchError(error => this.usersService.processError(error))
+    );
+  }
+  
+  addFilm(film: Film): Observable<any> {
+    return this.http.post(`${this.url}films`, film, this.getTokenHeader()).pipe(
+      catchError(error => this.usersService.processError(error))
+    );
+  }
+  
+  updateFilm(film: Film): Observable<any> {
+    return this.http.put(`${this.url}films/${film.id}`, film, this.getTokenHeader()).pipe(
+      catchError(error => this.usersService.processError(error))
+    );
+  }
+  
   url = environment.restServerUrl;
   http = inject(HttpClient);
   usersService = inject(UsersService);
